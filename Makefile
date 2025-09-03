@@ -1,6 +1,6 @@
 IDIR=include
 #Choose compiler
-CXX=$(CXX)
+CXX=g++
 CXXFLAGS=-I$(IDIR) -std=c++11
 
 ODIR=src
@@ -11,15 +11,10 @@ LIBS=-lm -fopenmp
 _DEPS = deep_core.h vector_ops.h
 DEPS = $(patsubst %,$(IDIR)/%,$(_DEPS))
 
-_OBJ = deep_core.o vector_ops.o
-OBJ = $(patsubst %,$(ODIR)/%,$(_OBJ))
-
-deep_core.o: deep_core.cpp $(DEPS)
-	$(CXX) -c -o $@ $< ${CXXFLAGS}
-
-vector_ops.o: vector_ops.cpp $(DEPS)
-	$(CXX) -c -o $@ $< ${CXXFLAGS}
-
+# grab all source files
+SRC = $(wildcard $(ODIR)/*.cpp)
+# create a list of object file names corresponding to the source files
+OBJ = $(SRC:.cpp=.o)
 
 nnetwork_mpi.o:
 	$(CXX) -c -o $@ nnetwork.cxx ${CXXFLAGS} -DUSE_MPI
