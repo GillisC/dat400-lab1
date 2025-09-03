@@ -1,0 +1,3 @@
+*.o
+nnetwork
+.DS_Store
