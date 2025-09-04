@@ -2,7 +2,7 @@ IDIR=include
 #Choose compiler
 CXX=g++
 CXXFLAGS=-I$(IDIR) -std=c++11 -g -fno-omit-frame-pointer
-
+# -O3 -fno-trapping-math -fno-math-errno
 ODIR=src
 LDIR =../lib
 
@@ -32,7 +32,9 @@ run_serial:
 	./nnetwork
 
 perf_serial:
-	perf record ./nnetwork
+	timeout 60 perf record ./nnetwork
+	perf report
+
 	
 all: clean nnetwork_mpi nnetwork
 .PHONY: clean
